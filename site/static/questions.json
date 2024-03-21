@@ -7,7 +7,9 @@
       "Hablabamos",
       "Hablabas",
       "Hablaban"
-      
+    ]
+  },
+  {
     "question": "Yo Comer",
     "correct_answer": 2,
     "answers": [
@@ -16,33 +18,38 @@
       "Comia",
       "Comian"
     ]
-  }
-
-
-     "Question": "Tu Vivir", 
-     "Correct answer": 1, 
-     "answers": [
+  },
+  {
+    "Question": "Tu Vivir",
+    "Correct answer": 1,
+    "answers": [
       "Viven",
-      "Vivias", 
+      "Vivias",
       "Viviemos",
       "vivian"
-
-       "Question": "Ellos Comer", 
-     "Correct answer": 3, 
-     "answers": [
+    ]
+  },
+  {
+    "Question": "Ellos Comer",
+    "Correct answer": 3,
+    "answers": [
       "Comiamos",
-      "Comia", 
+      "Comia",
       "Comias",
       "Comian"
-
-       "Question": "Nosotros hablar", 
-     "Correct answer": 0, 
-     "answers": [
+    ]
+  },
+  {
+    "Question": "Nosotros hablar",
+    "Correct answer": 0,
+    "answers": [
       "Hablabamos",
-      "Hablaba", 
+      "Hablaba",
       "Hablaban",
       "Hablaber"
-
+    ]
+  }
+]
     
       
     
