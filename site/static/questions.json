@@ -1,0 +1,22 @@
+[
+  {
+    "question": "What color is a banana?",
+    "correct_answer": 0,
+    "answers": [
+      "Yellow",
+      "Red",
+      "Brown",
+      "Orange"
+    ]
+  },
+  {
+    "question": "What color is an apple?",
+    "correct_answer": 1,
+    "answers": [
+      "Yellow",
+      "Red",
+      "Brown",
+      "Orange"
+    ]
+  }
+]

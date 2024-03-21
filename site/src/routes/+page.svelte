@@ -1,22 +1,12 @@
+<script>
+    import Menu from '$lib/pages/menu/menu.svelte'
 
+    import {createRoom} from "$lib/room.js";
+    import {ROOM_CODE, STATE} from "$lib/store.js";
+</script>
 
-<div class="container">
-    <h1>Imperfect Baseball</h1>
-    <input type="text" placeholder="game code"> <br>
-    <a href="#">Create room</a>
-</div>
-
-<style>
-    a {
-        font-size: 0.5rem;
-        text-align: left;
-    }
-    .container {
-        margin-top: 5rem;
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 600px;
-        font-family: Arial;
-    }
-</style>
+<main>
+    {#if $STATE === "MENU"}
+        <Menu />
+    {/if}
+</main>
