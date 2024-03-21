@@ -1,22 +1,49 @@
 [
   {
-    "question": "What color is a banana?",
+    "question": "Yo Hablar",
     "correct_answer": 0,
     "answers": [
-      "Yellow",
-      "Red",
-      "Brown",
-      "Orange"
-    ]
-  },
-  {
-    "question": "What color is an apple?",
-    "correct_answer": 1,
+      "Hablaba",
+      "Hablabamos",
+      "Hablabas",
+      "Hablaban"
+      
+    "question": "Yo Comer",
+    "correct_answer": 2,
     "answers": [
-      "Yellow",
-      "Red",
-      "Brown",
-      "Orange"
+      "Comimos",
+      "Comias",
+      "Comia",
+      "Comian"
     ]
   }
-]
+
+
+     "Question": "Tu Vivir", 
+     "Correct answer": 1, 
+     "answers": [
+      "Viven",
+      "Vivias", 
+      "Viviemos",
+      "vivian"
+
+       "Question": "Ellos Comer", 
+     "Correct answer": 3, 
+     "answers": [
+      "Comiamos",
+      "Comia", 
+      "Comias",
+      "Comian"
+
+       "Question": "Nosotros hablar", 
+     "Correct answer": 0, 
+     "answers": [
+      "Hablabamos",
+      "Hablaba", 
+      "Hablaban",
+      "Hablaber"
+
+    
+      
+    
+  
