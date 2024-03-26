@@ -13,13 +13,40 @@
             array[j] = temp;
         }
     }
+
+    function chooseAnswer(answer) {
+        QUESTION_STATE.set(answer === correct ? "true" : "false")
+    }
 </script>
 
 <section>
     <h1>{$QUESTION.question}</h1>
-    {#each answers as answer}
-        <button on:click={() => {
-            QUESTION_STATE.set(answer === correct ? "true" : "false")
-        }}>{answer} {answer === correct ? '.' : '-'}</button>
-    {/each}
+    <div class="answers">
+        {#each answers as answer}
+            <div class="answer" on:click={() => chooseAnswer(answer)}>{answer}</div>
+        {/each}
+    </div>
 </section>
+
+<style>
+    h1 {
+        text-align: center;
+        font-size: 2rem;
+    }
+    .answers {
+        display: grid;
+        gap: 1rem;
+        color: black;
+    }
+
+    .answer {
+        border-radius: 0.5rem;
+        background-color: gray;
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+
+    .answer:hover {
+        background-color: lightgray;
+    }
+</style>

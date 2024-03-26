@@ -9,7 +9,7 @@
 
 <section class="container">
     {#if codeState}
-        <h1>Imperfect Baseball</h1>
+        <h1>Enter Code</h1>
         <input bind:value={codeEntered} on:keypress={async (e) => {
         if (e.key === "Enter") {
             let exists = await roomExists(codeEntered);
@@ -49,14 +49,16 @@
     a {
         font-size: 0.5rem;
         text-align: left;
+        color: gray;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: black;
     }
 
     .container {
         margin-top: 5rem;
         text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 300px;
-        font-family: Arial;
     }
 </style>

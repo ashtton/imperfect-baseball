@@ -11,6 +11,9 @@
 </script>
 
 <main>
+    <h1>Imperfect Baseball</h1>
+    <hr>
+
     {#if $STATE === "MENU"}
         <Menu />
     {/if}
@@ -23,3 +26,18 @@
         <Playing />
     {/if}
 </main>
+
+<style>
+    :global(body) {
+        font-family: Arial;
+    }
+
+    main {
+        max-width: 500px;
+        margin: auto;
+    }
+
+    h1 {
+        text-align: center;
+    }
+</style>

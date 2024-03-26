@@ -12,7 +12,7 @@
         <Admin />
     {:else}
         {#if $DECISION}
-            <h1>waiting..</h1>
+            <h1 style="text-align: center">Waiting..</h1>
         {:else }
             {#if $QUESTION_STATE === null}
                 <Question />
