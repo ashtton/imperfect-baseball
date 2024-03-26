@@ -19,7 +19,7 @@ public class SocketIOConfig {
         com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
         config.setHostname(host);
         config.setPort(port);
-        config.setOrigin("https://baseball.zorb.fun/");
+        config.setOrigin("http://backend.zorb.fun:3000");
         return new SocketIOServer(config);
     }
 
