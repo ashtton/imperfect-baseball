@@ -3,9 +3,9 @@ package me.ashton.api.listener.impl;
 import com.corundumstudio.socketio.SocketIOClient;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import me.ashton.api.game.Game;
 import me.ashton.api.listener.Listener;
+import me.ashton.api.socket.SocketServer;
 import me.ashton.api.user.User;
 
 public class JoinRoomListener implements Listener<JoinRoomListener.Data> {
@@ -27,9 +27,14 @@ public class JoinRoomListener implements Listener<JoinRoomListener.Data> {
 
         if (game.getHomeTeam() == null) {
             game.setHomeTeam(user);
+            client.sendEvent("assignRole", "HOME");
         } else {
             game.setAwayTeam(user);
+            client.sendEvent("assignRole", "AWAY");
         }
+
+        SocketServer.getDisconnectListeners().put(client.getSessionId(), () ->
+                game.endGame(data.getUsername() + " disconnected."));
 
         System.out.println(data.getUsername() + " is joining " + data.getCode());
     }

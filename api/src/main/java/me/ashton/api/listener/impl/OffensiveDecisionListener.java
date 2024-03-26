@@ -1,6 +1,7 @@
 package me.ashton.api.listener.impl;
 
 import com.corundumstudio.socketio.SocketIOClient;
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import me.ashton.api.game.Game;
@@ -17,8 +18,10 @@ public class OffensiveDecisionListener implements Listener<OffensiveDecisionList
             return;
         }
 
+        game.setOffensiveDecision(data);
+        game.playOut();
 
-
+        System.out.println("offensive decision: " + new Gson().toJson(data));
     }
 
     @Getter @Setter

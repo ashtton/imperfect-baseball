@@ -1,5 +1,5 @@
 import {socket} from "$lib/socket.js";
-import {GAME, USERNAME} from "$lib/store.js";
+import {DECISION, RESULT} from "$lib/store.js";
 
 export const createRoom = async() => {
     const res = await fetch("http://localhost:8080/api/room/create", {
@@ -24,19 +24,49 @@ export const joinRoom = (code, username) => {
         "code": code,
         "username": username
     });
-    subscribeToGame(code)
 }
 
 export const setAdmin = (code) => {
     socket.emit("setAdmin", {
         "code": code
     })
-    subscribeToGame(code)
 }
 
-const subscribeToGame = (game) => {
-    socket.on('updateGame', (data) => {
-        GAME.set(JSON.parse(data))
-        console.log(data)
+export const startGame = (code) => {
+    socket.emit("startGame", {
+        "code": code
     })
+}
+
+export const nextPitch = (code) => {
+    RESULT.set(null)
+    socket.emit("nextPitch", {
+        "code": code
+    })
+}
+
+export const submitDefense = (code, question, strike, pitchType) => {
+    socket.emit("setDefense", {
+        "code": code,
+        "answeredCorrectly": question,
+        "strike": strike,
+        "pitchType": pitchType
+    })
+
+    console.log({
+        "code": code,
+        "answeredCorrectly": question,
+        "strike": strike,
+        "pitchType": pitchType
+    })
+    DECISION.set(true)
+}
+
+export const submitOffense = (code, question, swingTiming) => {
+    socket.emit("setOffense", {
+        "code": code,
+        "answeredCorrectly": question,
+        "swingTiming": swingTiming
+    })
+    DECISION.set(true)
 }

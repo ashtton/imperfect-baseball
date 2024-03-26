@@ -21,7 +21,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter @Setter
-@JsonIgnoreProperties("adminClient")
 public class Game {
 
     @Getter private static final Map<String, Game> games = new HashMap<>();
@@ -39,10 +38,16 @@ public class Game {
     private GameConfig gameConfig = new GameConfig();
     private GameData gameData = new GameData();
 
+    private boolean awaitingDecisions = false;
+
     private OffensiveDecisionListener.Data offensiveDecision;
     private DefensiveDecisionListener.Data defensiveDecision;
 
     public void playOut() {
+        if (offensiveDecision == null || defensiveDecision == null) {
+            return;
+        }
+
         PitchType pitchType = defensiveDecision.getPitchType();
         SwingTiming swingTiming = offensiveDecision.getSwingTiming();
 
@@ -100,13 +105,13 @@ public class Game {
 
                 // 50/50 chance to be a flyout or groundout
                 if (random.nextInt(100) > 50) {
-                    handleResult(BattingResult.FLYOUT);
                     handleOut();
+                    handleResult(BattingResult.FLYOUT);
                     return;
                 }
 
-                handleResult(BattingResult.GROUND_OUT);
                 handleOut();
+                handleResult(BattingResult.GROUND_OUT);
                 return;
             }
 
@@ -148,8 +153,8 @@ public class Game {
 
             // very small chance for flyout
             if (random.nextInt(100) > 85) {
-                handleResult(BattingResult.FLYOUT);
                 handleOut();
+                handleResult(BattingResult.FLYOUT);
                 return;
             }
 
@@ -159,6 +164,12 @@ public class Game {
         }
 
         // handle swing if both are correct
+
+        // chance of swing and miss if pitch isnt strike
+        if (!strike && random.nextInt(100) > 60) {
+            handleStrike();
+            handleResult(BattingResult.SWING_AND_MISS);
+        }
 
         // correct timing
         if (correctTiming) {
@@ -193,8 +204,8 @@ public class Game {
             }
 
             // otherwise its a flyout
-            handleResult(BattingResult.FLYOUT);
             handleOut();
+            handleResult(BattingResult.FLYOUT);
             return;
         }
 
@@ -202,33 +213,57 @@ public class Game {
 
         // chance of swing and miss
         if (random.nextInt(100) > 50) {
-            handleResult(BattingResult.SWING_AND_MISS);
             handleStrike();
+            handleResult(BattingResult.SWING_AND_MISS);
             return;
         }
 
         // small chance of getting a single
         if (random.nextInt(100) > 85) {
-            handleResult(BattingResult.SINGLE);
             createRunner(1);
+            handleResult(BattingResult.SINGLE);
             return;
         }
 
         // otherwise its either a flyout or groundout
 
         if (random.nextInt(100) > 50) {
-            handleResult(BattingResult.FLYOUT);
             handleOut();
+            handleResult(BattingResult.FLYOUT);
             return;
         }
 
-        handleResult(BattingResult.GROUND_OUT);
         handleOut();
+        handleResult(BattingResult.GROUND_OUT);
     }
 
     public void createRunner(int bases) {
         gameData.setStrikes(0);
         gameData.setBalls(0);
+
+        List<Integer> activeBases = new ArrayList<>();
+        gameData.getRunners().forEach((base, active) -> {
+            if (active) {
+                activeBases.add(base + bases);
+            }
+        });
+
+        activeBases.add(bases);
+
+        gameData.getRunners().put(1, activeBases.contains(1));
+        gameData.getRunners().put(2, activeBases.contains(2));
+        gameData.getRunners().put(3, activeBases.contains(3));
+
+        int score = (int) activeBases.stream()
+                .filter(base -> base >= 4)
+                .count();
+
+        if (gameData.isBottomInning()) {
+            homeTeam.setScore(homeTeam.getScore() + score);
+            return;
+        }
+
+        awayTeam.setScore(awayTeam.getScore() + score);
     }
 
     public void handleStrike() {
@@ -249,13 +284,14 @@ public class Game {
         }
 
         gameData.setOuts(0);
+        gameData.getRunners().clear();
 
         if (gameData.isBottomInning()) {
             gameData.setBottomInning(false);
             gameData.setInning(gameData.getInning() + 1);
             if (gameConfig.getInnings() < gameData.getInning() &&
                 awayTeam.getScore() != homeTeam.getScore()) {
-                endGame();
+                endGame("Game over");
             }
             return;
         }
@@ -263,16 +299,26 @@ public class Game {
         gameData.setBottomInning(true);
         if (gameData.getInning() == gameConfig.getInnings() &&
             homeTeam.getScore() > awayTeam.getScore()) {
-            endGame();
+            endGame("Game over");
         }
     }
 
     public void handleResult(BattingResult result) {
+        defensiveDecision = null;
+        offensiveDecision = null;
 
+        getClients().forEach(socket -> socket.sendEvent("result", result.name()));
+
+        System.out.println("result: " + result);
+        System.out.println(gson.toJson(gameData));
+        System.out.println("away: " + gson.toJson(awayTeam));
+        System.out.println("home: " + gson.toJson(homeTeam));
     }
 
-    public void endGame() {
-
+    public void endGame(String reason) {
+        getClients().forEach(socket -> socket.sendEvent("endGame", reason));
+        Game.getGames().remove(gameCode);
+        System.out.println("GAME IS OVER");
     }
 
     public void startUpdating() {

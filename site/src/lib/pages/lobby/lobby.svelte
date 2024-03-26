@@ -1,8 +1,6 @@
 <script>
-    import {onMount} from "svelte";
-    import {socket} from "$lib/socket.js";
-    import {GAME, USERNAME} from "$lib/store.js";
-
+    import {GAME, ROLE, USERNAME} from "$lib/store.js";
+    import {startGame} from "$lib/room.js";
 </script>
 
 <h1>Code: {$GAME.gameCode}</h1>
@@ -19,6 +17,6 @@
     <h3>Home Team: none</h3>
 {/if}
 
-{#if $GAME.homeTeam && $GAME.awayTeam}
-    <button>Start game</button>
+{#if $GAME.homeTeam && $GAME.awayTeam && $ROLE === "ADMIN"}
+    <button on:click={() => startGame($GAME.gameCode)}>Start game</button>
 {/if}

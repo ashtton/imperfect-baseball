@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.ashton.api.game.Game;
 import me.ashton.api.listener.Listener;
-import me.ashton.api.user.User;
+import me.ashton.api.socket.SocketServer;
 
 public class SetAdminListener implements Listener<SetAdminListener.Data> {
 
@@ -24,6 +24,11 @@ public class SetAdminListener implements Listener<SetAdminListener.Data> {
 
         game.setAdminClient(client);
         game.startUpdating();
+        client.sendEvent("assignRole", "ADMIN");
+
+        SocketServer.getDisconnectListeners().put(client.getSessionId(), () ->
+                game.endGame("The admin disconnected."));
+
         System.out.println(data.getCode() + " has an admin");
     }
 

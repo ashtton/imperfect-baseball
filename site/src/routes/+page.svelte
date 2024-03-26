@@ -1,6 +1,7 @@
 <script>
     import Menu from '$lib/pages/menu/menu.svelte'
     import Lobby from '$lib/pages/lobby/lobby.svelte'
+    import Playing from '$lib/pages/playing/playing.svelte'
 
     import {createRoom} from "$lib/room.js";
     import {STATE} from "$lib/store.js";
@@ -16,5 +17,9 @@
 
     {#if $STATE === "LOBBY"}
         <Lobby />
+    {/if}
+
+    {#if $STATE === "PLAYING"}
+        <Playing />
     {/if}
 </main>
