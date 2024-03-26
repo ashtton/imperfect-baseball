@@ -1,6 +1,6 @@
 import ioClient from 'socket.io-client';
 import {DECISION, GAME, RESULT, ROLE, STATE, USERNAME} from "$lib/store.js";
-const ENDPOINT = 'ws://localhost:3333';
+const ENDPOINT = 'ws://142.4.216.95:3333';
 
 export const socket = ioClient(ENDPOINT);
 

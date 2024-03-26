@@ -2,7 +2,7 @@ import {socket} from "$lib/socket.js";
 import {DECISION, RESULT} from "$lib/store.js";
 
 export const createRoom = async() => {
-    const res = await fetch("http://localhost:8080/api/room/create", {
+    const res = await fetch("http://142.4.216.95:3331/api/room/create", {
         method: "POST"
     })
 
@@ -10,7 +10,7 @@ export const createRoom = async() => {
 }
 
 export const roomExists = async(code) => {
-    const res = await fetch("http://localhost:8080/api/room/" + code + "/exists", {
+    const res = await fetch("http://142.4.216.95:3331/api/room/" + code + "/exists", {
         method: "GET"
     })
 
