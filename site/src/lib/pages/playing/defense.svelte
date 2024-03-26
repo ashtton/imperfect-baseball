@@ -14,6 +14,6 @@
 
 </select>
 
-    Strike: <input type="checkbox" bind:value={strike}>
+    Strike: <input type="checkbox" bind:checked={strike}>
     <button on:click={() => submitDefense($GAME.gameCode, $QUESTION_STATE === "true", strike, pitchType)}>Submit</button>
 </section>

@@ -56,7 +56,7 @@
         text-align: center;
         margin-left: auto;
         margin-right: auto;
-        max-width: 600px;
+        max-width: 300px;
         font-family: Arial;
     }
 </style>
