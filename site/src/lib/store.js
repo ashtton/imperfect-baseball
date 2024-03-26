@@ -11,4 +11,7 @@ export const ROLE = writable("UNKNOWN")
 
 export const DECISION = writable(false)
 
+export const QUESTION_STATE = writable(null)
+export const QUESTION = writable({})
+
 export const RESULT = writable(null)

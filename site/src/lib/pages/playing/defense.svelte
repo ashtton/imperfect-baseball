@@ -1,6 +1,6 @@
 <script>
     import {submitDefense} from "$lib/room.js";
-    import {GAME} from "$lib/store.js";
+    import {GAME, QUESTION_STATE} from "$lib/store.js";
 
     let pitchType = "FASTBALL";
     let strike = false;
@@ -15,5 +15,5 @@
 </select>
 
     Strike: <input type="checkbox" bind:value={strike}>
-    <button on:click={() => submitDefense($GAME.gameCode, true, strike, pitchType)}>Submit</button>
+    <button on:click={() => submitDefense($GAME.gameCode, $QUESTION_STATE === "true", strike, pitchType)}>Submit</button>
 </section>

@@ -1,6 +1,6 @@
 <script>
     import {submitOffense} from "$lib/room.js";
-    import {GAME} from "$lib/store.js";
+    import {GAME, QUESTION_STATE} from "$lib/store.js";
 
     let timing = "EARLY";
 </script>
@@ -12,5 +12,5 @@
     <option value="TAKE">Take</option>
 </select>
 
-    <button on:click={() => submitOffense($GAME.gameCode, true, timing)}>Submit</button>
+    <button on:click={() => submitOffense($GAME.gameCode, $QUESTION_STATE === "true", timing)}>Submit</button>
 </section>

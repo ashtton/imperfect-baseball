@@ -1,5 +1,6 @@
 import {socket} from "$lib/socket.js";
-import {DECISION, RESULT} from "$lib/store.js";
+import {DECISION, QUESTION, RESULT} from "$lib/store.js";
+import {QUESTIONS} from "$lib/questions.js";
 
 export const createRoom = async() => {
     const res = await fetch("http://142.4.216.95:3331/api/room/create", {
@@ -69,4 +70,8 @@ export const submitOffense = (code, question, swingTiming) => {
         "swingTiming": swingTiming
     })
     DECISION.set(true)
+}
+
+export const chooseQuestion = () => {
+    QUESTION.set(QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)])
 }

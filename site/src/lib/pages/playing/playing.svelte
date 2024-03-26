@@ -4,7 +4,7 @@
     import Defense from '$lib/pages/playing/defense.svelte'
     import Question from '$lib/pages/playing/question.svelte'
 
-    import {DECISION, GAME, ROLE} from "$lib/store.js";
+    import {DECISION, GAME, QUESTION_STATE, ROLE} from "$lib/store.js";
 </script>
 
 <section>
@@ -14,10 +14,14 @@
         {#if $DECISION}
             <h1>waiting..</h1>
         {:else }
-            {#if $ROLE === "AWAY" && $GAME.gameData.bottomInning || $ROLE === "HOME" && !$GAME.gameData.bottomInning}
-                <Defense />
+            {#if $QUESTION_STATE === null}
+                <Question />
             {:else}
-                <Offense />
+                {#if $ROLE === "AWAY" && $GAME.gameData.bottomInning || $ROLE === "HOME" && !$GAME.gameData.bottomInning}
+                    <Defense />
+                {:else}
+                    <Offense />
+                {/if}
             {/if}
         {/if}
     {/if}
